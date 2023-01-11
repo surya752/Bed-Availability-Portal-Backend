@@ -1,0 +1,42 @@
+server:
+  port: 4349
+
+spring:
+  application:
+    name: API-GATEWAY
+
+  cloud:
+    gateway:
+      routes:
+        - id: UserViewMicroservice
+          uri: lb://UserViewMicroservice
+          predicates:
+            - Path=/userView/**,/User/auth/**
+
+        - id: Admin-hospital-service
+          uri: lb://Admin-hospital-service
+          predicates:
+            - Path=/hospitals/**,/Admin/auth/**
+
+        - id: AddBedService-Microservice
+          uri: lb://AddBedService-Microservice
+          predicates:
+            - Path=/AddBed/**
+
+
+eureka:
+  instance:
+    prefer-ip-address: true
+  client:
+    fetch-registry: true
+    register-with-eureka: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka
+
+
+
+
+
+
+
+
